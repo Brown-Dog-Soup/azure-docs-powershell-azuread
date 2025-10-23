@@ -1,0 +1,29 @@
+[
+  {
+    "title": "Azure Cloud Architect",
+    "company": "Enterprise Solutions Ltd",
+    "location": "Remote - Worldwide",
+    "url": "https://example.com/jobs/7",
+    "posted_date": "2025-10-14",
+    "description": "Azure Cloud Architect to design and implement cloud solutions. Required: Azure, PowerShell, ARM templates, Azure DevOps. Certifications preferred.",
+    "matched_skills": [
+      "powershell",
+      "azure"
+    ],
+    "match_score": 2,
+    "source": "Remotive"
+  },
+  {
+    "title": "DevOps Engineer",
+    "company": "CloudStart",
+    "location": "Remote - EU",
+    "url": "https://example.com/jobs/3",
+    "posted_date": "2025-10-18",
+    "description": "DevOps Engineer needed to manage our cloud infrastructure. Experience with Azure, Terraform, Kubernetes, and CI/CD pipelines required.",
+    "matched_skills": [
+      "azure"
+    ],
+    "match_score": 1,
+    "source": "Remotive"
+  }
+]

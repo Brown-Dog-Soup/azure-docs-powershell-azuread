@@ -1,0 +1,8 @@
+# Job Search Tool Requirements
+# This tool uses Python standard library only
+# No external dependencies required for basic functionality
+
+# Optional: If you want to add more features later, uncomment:
+# requests>=2.31.0  # Alternative to urllib for HTTP requests
+# beautifulsoup4>=4.12.0  # For HTML parsing if needed
+# python-dotenv>=1.0.0  # For environment variable management

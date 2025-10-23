@@ -1,0 +1,8 @@
+Python
+JavaScript
+Docker
+Kubernetes
+Azure
+AWS
+React
+Node.js
