@@ -66,6 +66,18 @@ python3 job_search.py --skills-file my_skills.txt
 python3 job_search.py azure devops terraform --output results.json
 ```
 
+**Filter by location:**
+```bash
+# Only US jobs
+python3 job_search.py python javascript --demo --location us
+
+# Only EU jobs
+python3 job_search.py azure devops --demo --location eu
+
+# Only worldwide remote jobs
+python3 job_search.py python --demo --location worldwide
+```
+
 **Verbose mode for debugging:**
 ```bash
 python3 job_search.py "machine learning" python --verbose
@@ -73,7 +85,7 @@ python3 job_search.py "machine learning" python --verbose
 
 **Combine options:**
 ```bash
-python3 job_search.py --skills-file skills.txt --limit 10 --output my_jobs.json --verbose
+python3 job_search.py --skills-file skills.txt --limit 10 --location us --output my_jobs.json --verbose
 ```
 
 ## Command-Line Options
@@ -87,7 +99,9 @@ optional arguments:
   --skills-file, -f     File containing skills (one per line)
   --limit, -l          Maximum number of results to display
   --output, -o         Save results to JSON file
+  --location           Filter jobs by location (e.g., "us", "eu", "remote", "worldwide")
   --verbose, -v        Enable verbose output
+  --demo, -d           Use demo mode with sample data (for testing)
 ```
 
 ## Example Output

@@ -22,10 +22,11 @@ import urllib.error
 class JobSearcher:
     """Main job search class that queries multiple APIs"""
 
-    def __init__(self, skills: List[str], verbose: bool = False, demo_mode: bool = False):
+    def __init__(self, skills: List[str], verbose: bool = False, demo_mode: bool = False, location: str = None):
         self.skills = [skill.lower() for skill in skills]
         self.verbose = verbose
         self.demo_mode = demo_mode
+        self.location = location.lower() if location else None
         self.results = []
 
     def log(self, message: str):
@@ -92,6 +93,16 @@ class JobSearcher:
                 matched.add(skill)
 
         return matched
+
+    def matches_location(self, job_location: str) -> bool:
+        """Check if job location matches the filter"""
+        if not self.location:
+            return True  # No filter, accept all
+
+        job_location_lower = job_location.lower()
+
+        # Check if the filter location is in the job location string
+        return self.location in job_location_lower
 
     def normalize_remotive_job(self, job: Dict[str, Any]) -> Dict[str, Any]:
         """Normalize Remotive job data to common format"""
@@ -222,21 +233,21 @@ class JobSearcher:
             demo_jobs = self.get_demo_jobs()
             for job in demo_jobs:
                 normalized = self.normalize_remotive_job(job)
-                if normalized['match_score'] > 0:
+                if normalized['match_score'] > 0 and self.matches_location(normalized['location']):
                     all_jobs.append(normalized)
         else:
             # Search Remotive
             remotive_jobs = self.search_remotive()
             for job in remotive_jobs:
                 normalized = self.normalize_remotive_job(job)
-                if normalized['match_score'] > 0:
+                if normalized['match_score'] > 0 and self.matches_location(normalized['location']):
                     all_jobs.append(normalized)
 
             # Search Arbeitnow
             arbeitnow_jobs = self.search_arbeitnow()
             for job in arbeitnow_jobs:
                 normalized = self.normalize_arbeitnow_job(job)
-                if normalized['match_score'] > 0:
+                if normalized['match_score'] > 0 and self.matches_location(normalized['location']):
                     all_jobs.append(normalized)
 
         # Sort by match score (descending)
@@ -331,6 +342,11 @@ Examples:
         help='Use demo mode with sample data (for testing)'
     )
 
+    parser.add_argument(
+        '--location',
+        help='Filter jobs by location (e.g., "us", "eu", "remote", "worldwide")'
+    )
+
     args = parser.parse_args()
 
     # Collect skills from arguments and/or file
@@ -352,11 +368,13 @@ Examples:
         sys.exit(1)
 
     print(f"Searching for jobs matching skills: {', '.join(skills)}")
+    if args.location:
+        print(f"Location filter: {args.location}")
     if args.demo:
         print("(Running in DEMO mode with sample data)")
 
     # Create searcher and search
-    searcher = JobSearcher(skills, verbose=args.verbose, demo_mode=args.demo)
+    searcher = JobSearcher(skills, verbose=args.verbose, demo_mode=args.demo, location=args.location)
     jobs = searcher.search_all()
 
     # Display results
